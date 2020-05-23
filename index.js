@@ -31,7 +31,7 @@ export default class Pro {
       let thenCallback = this.thenCallbacks[i];
 
       if (retValue instanceof Pro) {
-        retValue.thenCallbacks = [...this.thenCallbacks.slice(i + 1)];
+        // When another Promise is returned
         if (retValue.status === PENDING) {
           retValue.thenCallbacks = [...this.thenCallbacks.slice(i)];
           retValue.catchCallback = this.catchCallback;
@@ -45,6 +45,7 @@ export default class Pro {
           }
         }
       } else {
+        // When returned value is not a Promise
         try {
           retValue = thenCallback.call(this, retValue);
         } catch (err) {
